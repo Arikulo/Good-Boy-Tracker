@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Daily Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Daily Activity Tracker</h1>
+    <form id="activity-form">
+        <input type="text" id="activity-name" placeholder="Activity (e.g. Chores)" required>
+        <input type="number" id="activity-value" placeholder="Value" required>
+        <button type="submit">Add Activity</button>
+    </form>
+    <table id="activity-table">
+        <thead>
+            <tr>
+                <th>Activity</th>
+                <th>Value</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2>Total: <span id="total-value">0</span></h2>
+    <button id="save-day">Save Today's Total</button>
+
+    <h2>Overall Points: <span id="overall-points">0</span></h2>
+    <form id="spend-form">
+        <input type="number" id="spend-amount" placeholder="Points to spend" min="1" required>
+        <select id="spend-date"></select>
+        <button type="submit">Spend Points</button>
+    </form>
+
+    <h3>Saved Totals</h3>
+    <table id="saved-totals-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Points Earned</th>
+                <th>Points Spent</th>
+            </tr>
+        </thead>
+        <tbody id="saved-totals"></tbody>
+    </table>
+
+    <script src="main.js"></script>
+</body>
+</html>
