@@ -1,4 +1,91 @@
-body { font-family: Arial, sans-serif; margin: 2em; }
-input, button { margin: 0.5em 0; }
-table { border-collapse: collapse; margin-top: 1em; }
-th, td { border: 1px solid #ccc; padding: 0.5em; }
+    @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inconsolata', 'Segoe UI', Arial, sans-serif;
+    margin: 2em;
+    background: #f4f8fb;
+    color: #1a2636;
+}
+
+h1, h2 {
+    color: #2563eb;
+}
+
+input, button, select {
+    margin: 0.5em 0;
+    padding: 0.5em;
+    border-radius: 4px;
+    border: 1px solid #b6c6e3;
+    font-size: 1em;
+    background: #f7faff;
+    color: #1a2636;
+    transition: border 0.2s, box-shadow 0.2s;
+    font-family: 'Inconsolata', monospace;
+}
+
+input:focus, button:focus, select:focus {
+    outline: 2px solid #2563eb;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px #93c5fd55;
+}
+
+button {
+    background: linear-gradient(90deg, #2563eb 60%, #1e40af 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(37,99,235,0.08);
+    font-family: 'Inconsolata', monospace;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #1e40af 60%, #2563eb 100%);
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 1em;
+    width: 100%;
+    background: #f7faff;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.06);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'Inconsolata', monospace;
+}
+
+th, td {
+    border: 1px solid #dbeafe;
+    padding: 0.75em;
+    text-align: left;
+}
+
+th {
+    background: #2563eb;
+    color: #fff;
+    letter-spacing: 0.03em;
+}
+
+tr:nth-child(even) td {
+    background: #e0e7ef;
+}
+
+#current-datetime {
+    font-weight: bold;
+    margin-bottom: 1em;
+    color: #1e40af;
+    font-size: 1.1em;
+}
+
+form {
+    margin-bottom: 1em;
+}
+
+@media (max-width: 600px) {
+    body {
+        margin: 0.5em;
+    }
+    table, th, td {
+        font-size: 0.95em;
+    }
+}

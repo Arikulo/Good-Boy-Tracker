@@ -4,13 +4,32 @@ const valueInput = document.getElementById('activity-value');
 const tableBody = document.querySelector('#activity-table tbody');
 const totalValue = document.getElementById('total-value');
 const saveDayBtn = document.getElementById('save-day');
-const savedTotalsTableBody = document.getElementById('saved-totals');
 const overallPointsSpan = document.getElementById('overall-points');
 const spendForm = document.getElementById('spend-form');
 const spendAmountInput = document.getElementById('spend-amount');
-const spendDateSelect = document.getElementById('spend-date');
 
-let activities = [];
+// New: completed activities table
+let completedTable = document.getElementById('completed-table-body');
+if (!completedTable) {
+    // Create completed activities table if not present
+    const completedTableElem = document.createElement('table');
+    completedTableElem.innerHTML = `
+        <thead>
+            <tr>
+                <th>Completed Activity</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody id="completed-table-body"></tbody>
+    `;
+    completedTableElem.style.marginTop = "2em";
+    document.body.appendChild(completedTableElem);
+    completedTable = document.getElementById('completed-table-body');
+}
+
+let activities = JSON.parse(localStorage.getItem('today-activities') || '[]');
+let completedActivities = JSON.parse(localStorage.getItem('completed-activities') || '[]');
+let overallPoints = parseInt(localStorage.getItem('overall-points') || '0', 10);
 
 function updateTable() {
     tableBody.innerHTML = '';
@@ -26,6 +45,21 @@ function updateTable() {
         tableBody.appendChild(row);
     });
     totalValue.textContent = total;
+    localStorage.setItem('today-activities', JSON.stringify(activities));
+    updateCompletedTable();
+}
+
+function updateCompletedTable() {
+    completedTable.innerHTML = '';
+    completedActivities.forEach(act => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${act.name}</td>
+            <td>${act.value}</td>
+        `;
+        completedTable.appendChild(row);
+    });
+    localStorage.setItem('completed-activities', JSON.stringify(completedActivities));
 }
 
 window.removeActivity = function(idx) {
@@ -46,93 +80,44 @@ form.addEventListener('submit', function(e) {
 });
 
 saveDayBtn.addEventListener('click', function() {
-    const today = new Date().toISOString().slice(0, 10);
     const total = activities.reduce((sum, act) => sum + act.value, 0);
     if (total === 0) return;
-    localStorage.setItem('tracker-' + today, total);
-    loadSavedTotals();
+    overallPoints += total;
+    localStorage.setItem('overall-points', overallPoints);
+    updateOverallPoints();
+    // Move activities to completed list
+    completedActivities = completedActivities.concat(activities);
     activities = [];
     updateTable();
+    // Save completed list
+    localStorage.setItem('completed-activities', JSON.stringify(completedActivities));
 });
 
-// Helper to get all tracker dates
-function getAllTrackerDates() {
-    return Object.keys(localStorage)
-        .filter(key => key.startsWith('tracker-'))
-        .map(key => key.replace('tracker-', ''))
-        .sort();
-}
-
-// Populate spend date dropdown
-function updateSpendDateOptions() {
-    spendDateSelect.innerHTML = '';
-    getAllTrackerDates().forEach(date => {
-        const option = document.createElement('option');
-        option.value = date;
-        option.textContent = date;
-        spendDateSelect.appendChild(option);
-    });
-}
-
-// Get spent points for a specific date
-function getSpentPointsForDate(date) {
-    return parseInt(localStorage.getItem('spent-' + date) || '0', 10);
-}
-
-// Set spent points for a specific date
-function setSpentPointsForDate(date, val) {
-    localStorage.setItem('spent-' + date, val);
-}
-
-// Update overall points calculation to sum all earned minus all spent
-function calculateOverallPoints() {
-    let total = 0;
-    getAllTrackerDates().forEach(date => {
-        const earned = parseInt(localStorage.getItem('tracker-' + date), 10) || 0;
-        const spent = getSpentPointsForDate(date);
-        total += (earned - spent);
-    });
-    return total;
-}
-
 function updateOverallPoints() {
-    overallPointsSpan.textContent = calculateOverallPoints();
+    overallPointsSpan.textContent = overallPoints;
 }
 
 spendForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const spend = parseInt(spendAmountInput.value, 10);
-    const date = spendDateSelect.value;
-    const earned = parseInt(localStorage.getItem('tracker-' + date), 10) || 0;
-    const alreadySpent = getSpentPointsForDate(date);
-    const available = earned - alreadySpent;
-    if (!isNaN(spend) && spend > 0 && spend <= available) {
-        setSpentPointsForDate(date, alreadySpent + spend);
+    if (!isNaN(spend) && spend > 0 && spend <= overallPoints) {
+        overallPoints -= spend;
+        localStorage.setItem('overall-points', overallPoints);
         updateOverallPoints();
-        loadSavedTotals();
         spendAmountInput.value = '';
     } else {
-        alert('Not enough points to spend for that day!');
+        alert('Not enough points to spend!');
     }
 });
 
-// Update the saved totals table
-function loadSavedTotals() {
-    savedTotalsTableBody.innerHTML = '';
-    getAllTrackerDates().forEach(date => {
-        const earned = localStorage.getItem('tracker-' + date);
-        const spent = getSpentPointsForDate(date);
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${date}</td>
-            <td>${earned}</td>
-            <td>${spent}</td>
-        `;
-        savedTotalsTableBody.appendChild(row);
-    });
-    updateSpendDateOptions();
-    updateOverallPoints();
+function updateCurrentDateTime() {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString();
+    const timeStr = now.toLocaleTimeString();
+    document.getElementById('current-datetime').textContent = `Current Date & Time: ${dateStr} ${timeStr}`;
 }
+setInterval(updateCurrentDateTime, 1000);
+updateCurrentDateTime();
 
-loadSavedTotals();
 updateTable();
+updateOverallPoints();
