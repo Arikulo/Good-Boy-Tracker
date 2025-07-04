@@ -1,86 +1,359 @@
+/* Import a monospace font for the app */
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
 
+/* CSS Custom Properties (Variables) */
+:root {
+    --primary-blue: #60a5fa;
+    --primary-blue-light: #93c5fd;
+    --primary-blue-dark: #2563eb;
+    --primary-blue-darker: #1e40af;
+    --background-dark: #181f2a;
+    --surface-dark: #232c3a;
+    --surface-darker: #1e293b;
+    --border-color: #334155;
+    --text-primary: #e3e8ee;
+    --text-secondary: #94a3b8;
+    --text-muted: #ccc;
+    --success-color: #4CAF50;
+    --danger-color: #dc2626;
+    --danger-color-dark: #b91c1c;
+    --green-color: #059669;
+    --green-color-dark: #047857;
+    --font-family: 'Inconsolata', 'Segoe UI', Arial, sans-serif;
+    --shadow-sm: 0 2px 6px rgba(37,99,235,0.12);
+    --shadow-md: 0 2px 12px rgba(37,99,235,0.10);
+}
+
+/* Main body styling */
 body {
-    font-family: 'Inconsolata', 'Segoe UI', Arial, sans-serif;
+    font-family: var(--font-family);
     margin: 2em;
-    background: #181f2a;
-    color: #e3e8ee;
+    background: var(--background-dark);
+    color: var(--text-primary);
 }
 
-h1, h2 {
-    color: #60a5fa;
+/* Headings styling */
+h1, h2, h3 {
+    color: var(--primary-blue);
 }
 
+/* Form elements base styling */
 input, button, select {
     margin: 0.5em 0;
     padding: 0.5em;
     border-radius: 4px;
-    border: 1px solid #334155;
+    border: 1px solid var(--border-color);
     font-size: 1em;
-    background: #232c3a;
-    color: #e3e8ee;
+    background: var(--surface-dark);
+    color: var(--text-primary);
     transition: border 0.2s, box-shadow 0.2s;
-    font-family: 'Inconsolata', monospace;
+    font-family: var(--font-family);
 }
 
+/* Focus state for form elements */
 input:focus, button:focus, select:focus {
-    outline: 2px solid #60a5fa;
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 2px #60a5fa55;
+    outline: 2px solid var(--primary-blue);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.33);
 }
 
+/* Button styling */
 button {
-    background: linear-gradient(90deg, #2563eb 60%, #1e40af 100%);
+    background: linear-gradient(90deg, var(--primary-blue-dark) 60%, var(--primary-blue-darker) 100%);
     color: #fff;
     border: none;
     cursor: pointer;
     font-weight: 700;
-    box-shadow: 0 2px 6px rgba(37,99,235,0.12);
-    font-family: 'Inconsolata', monospace;
+    box-shadow: var(--shadow-sm);
 }
 
 button:hover {
-    background: linear-gradient(90deg, #1e40af 60%, #2563eb 100%);
+    background: linear-gradient(90deg, var(--primary-blue-darker) 60%, var(--primary-blue-dark) 100%);
 }
 
+/* Table styling */
 table {
     border-collapse: collapse;
     margin-top: 1em;
     width: 100%;
-    background: #232c3a;
-    box-shadow: 0 2px 12px rgba(37,99,235,0.10);
+    background: var(--surface-dark);
+    box-shadow: var(--shadow-md);
     border-radius: 8px;
     overflow: hidden;
-    font-family: 'Inconsolata', monospace;
+    font-family: var(--font-family);
 }
 
 th, td {
-    border: 1px solid #334155;
+    border: 1px solid var(--border-color);
     padding: 0.75em;
     text-align: left;
 }
 
 th {
-    background: #2563eb;
+    background: var(--primary-blue-dark);
     color: #fff;
     letter-spacing: 0.03em;
 }
 
 tr:nth-child(even) td {
-    background: #1e293b;
+    background: var(--surface-darker);
+}
+
+/* Common container styling */
+.container, .settings-section, .essential-item, .item-card {
+    background: var(--surface-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.settings-section {
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    border-radius: 8px;
+}
+
+/* Points and totals styling */
+.points-summary {
+    background-color: #2a2a2a;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border: 1px solid #555;
+}
+
+.points-summary h3 {
+    margin: 0 0 8px 0;
+    color: #fff;
+    font-size: 1em;
+}
+
+.points-summary-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.points-summary-content span {
+    color: var(--text-muted);
+}
+
+#today-total {
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+#overall-points {
+    color: var(--primary-blue);
+    font-weight: bold;
+}
+
+/* Layout and spacing */
+form {
+    margin-bottom: 1em;
 }
 
 #current-datetime {
     font-weight: bold;
     margin-bottom: 1em;
-    color: #60a5fa;
+    color: var(--primary-blue);
     font-size: 1.1em;
 }
 
-form {
+/* Header and navigation */
+.header-controls, .settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1em;
 }
 
+.settings-header {
+    margin-bottom: 2em;
+}
+
+.back-link, .settings-link {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.settings-link {
+    font-size: 0.9em;
+}
+
+.back-link:hover, .settings-link:hover {
+    color: var(--primary-blue-light);
+}
+
+/* Grid layouts */
+.essentials-grid, .item-grid {
+    display: grid;
+    gap: 1em;
+}
+
+.essentials-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    margin: 1em 0;
+}
+
+.item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Form layouts */
+.add-item-form {
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 1.5em;
+    flex-wrap: wrap;
+}
+
+.add-item-form input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.add-item-form button {
+    min-width: 120px;
+}
+
+/* Item cards and components */
+.essential-item, .item-card {
+    padding: 0.75em;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    min-height: 3em;
+}
+
+.essential-item {
+    gap: 0.5em;
+}
+
+.essential-item:hover {
+    background: #2a3441;
+}
+
+.item-card {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.essential-item label {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+    flex: 1;
+}
+
+.essential-item input[type="checkbox"] {
+    margin: 0;
+    width: 1.2em;
+    height: 1.2em;
+    accent-color: var(--primary-blue);
+}
+
+/* Text styling for items */
+.essential-name, .item-name {
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.essential-points, .item-points {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.items-list h3 {
+    color: var(--primary-blue);
+    margin-bottom: 1em;
+}
+
+/* Action buttons */
+.item-actions {
+    display: flex;
+    gap: 0.5em;
+    flex-shrink: 0;
+}
+
+.edit-btn, .delete-btn {
+    padding: 0.4em 0.8em;
+    font-size: 0.85em;
+    min-width: 60px;
+    white-space: nowrap;
+}
+
+/* Edit form styling - full width overlay */
+.edit-form {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.edit-form input {
+    margin: 0;
+    padding: 0.4em;
+    font-size: 0.9em;
+    flex: 1;
+    min-width: 100px;
+}
+
+.edit-form input:first-of-type {
+    min-width: 120px;
+}
+
+.edit-form input:last-of-type {
+    min-width: 80px;
+    max-width: 100px;
+}
+
+.edit-form button {
+    padding: 0.4em 0.8em;
+    font-size: 0.85em;
+    min-width: 60px;
+    margin: 0.2em 0;
+}
+
+/* Button variants */
+.edit-btn {
+    background: linear-gradient(90deg, var(--green-color) 60%, var(--green-color-dark) 100%);
+}
+
+.edit-btn:hover {
+    background: linear-gradient(90deg, var(--green-color-dark) 60%, var(--green-color) 100%);
+}
+
+.delete-btn, .danger-btn {
+    background: linear-gradient(90deg, var(--danger-color) 60%, var(--danger-color-dark) 100%);
+}
+
+.delete-btn:hover, .danger-btn:hover {
+    background: linear-gradient(90deg, var(--danger-color-dark) 60%, var(--danger-color) 100%);
+}
+
+.danger-btn {
+    color: #fff;
+}
+
+/* Settings page specific styles */
+.settings-actions {
+    text-align: center;
+    padding: 2em 0;
+}
+
+/* Responsive adjustments for small screens */
 @media (max-width: 600px) {
     body {
         margin: 0.5em;

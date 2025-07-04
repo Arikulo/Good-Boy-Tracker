@@ -10,17 +10,23 @@
     <link rel="manifest" href="site.webmanifest">
 </head>
 <body>
-    <div id="current-datetime" style="font-weight:bold; margin-bottom:1em;"></div>
-    <h1>Daily Activity Tracker</h1>
-    <form id="activity-form">
-        <input type="text" id="activity-name" placeholder="Activity (e.g. Chores)" required>
-        <input type="number" id="activity-value" placeholder="Value" required>
-        <button type="submit">Add Activity</button>
+    <div class="header-controls">
+        <div id="current-datetime"></div>
+        <a href="settings.html" class="settings-link">⚙️ Settings</a>
+    </div>
+    <h1>Daily Chore Tracker</h1>
+    <form id="chore-form">
+        <input type="text" id="chore-name" list="chore-options" placeholder="Choose or type a chore" required>
+        <datalist id="chore-options">
+            <!-- Options will be populated dynamically -->
+        </datalist>
+        <input type="number" id="chore-value" placeholder="Value" required>
+        <button type="submit">Add Chore</button>
     </form>
-    <table id="activity-table">
+    <table id="chore-table">
         <thead>
             <tr>
-                <th>Activity</th>
+                <th>Chore</th>
                 <th>Value</th>
                 <th>Remove</th>
             </tr>
@@ -28,19 +34,59 @@
         <tbody></tbody>
     </table>
     <h2>Total: <span id="total-value">0</span></h2>
-    <button id="save-day">Save Today's Total</button>
 
-    <h2>Overall Points: <span id="overall-points">0</span></h2>
+    <h1>Daily Hobbies Tracker</h1>
+    <form id="hobby-form">
+        <input type="text" id="hobby-name" list="hobby-options" placeholder="Choose or type a hobby" required>
+        <datalist id="hobby-options">
+            <!-- Options will be populated dynamically -->
+        </datalist>
+        <input type="number" id="hobby-value" placeholder="Value" required>
+        <button type="submit">Add Hobby</button>
+    </form>
+    <table id="hobby-table">
+        <thead>
+            <tr>
+                <th>Hobby</th>
+                <th>Value</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2>Total: <span id="hobby-total-value">0</span></h2>
+
+    <h1>Daily Essentials</h1>
+    <div id="essentials-section">
+        <div id="essentials-list" class="essentials-grid">
+            <!-- Checkboxes will be populated dynamically -->
+        </div>
+        <h2>Total: <span id="essentials-total-value">0</span></h2>
+    </div>
+    
+    <button id="save-day">Save Today's Totals</button>
+
+    <div class="points-summary">
+        <h3>Point Summary</h3>
+        <div class="points-summary-content">
+            <div>
+                <span>Today's Total: <span id="today-total">0</span></span>
+            </div>
+            <div>
+                <span>Overall Points: <span id="overall-points">0</span></span>
+            </div>
+        </div>
+    </div>
     <form id="spend-form">
         <input type="number" id="spend-amount" placeholder="Points to spend" min="1" required>
         <button type="submit">Spend Points</button>
     </form>
 
-    <h2>Completed Activities</h2>
+    <h2>Completed</h2>
     <table>
         <thead>
             <tr>
-                <th>Completed Activity</th>
+                <th>Completed</th>
                 <th>Value</th>
             </tr>
         </thead>

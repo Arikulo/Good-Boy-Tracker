@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - Good Boy Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+</head>
+<body>
+    <div class="settings-header">
+        <h1>Settings</h1>
+        <a href="index.html" class="back-link">← Back to Tracker</a>
+    </div>
+
+    <div class="settings-section">
+        <h2>Manage Chores</h2>
+        <form id="add-chore-form" class="add-item-form">
+            <input type="text" id="new-chore-name" placeholder="Chore name" required>
+            <input type="number" id="new-chore-value" placeholder="Point value" min="1" required>
+            <button type="submit">Add Chore</button>
+        </form>
+        
+        <div class="items-list">
+            <h3>Current Chores</h3>
+            <div id="chores-list" class="item-grid"></div>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h2>Manage Hobbies</h2>
+        <form id="add-hobby-form" class="add-item-form">
+            <input type="text" id="new-hobby-name" placeholder="Hobby name" required>
+            <input type="number" id="new-hobby-value" placeholder="Point value" min="1" required>
+            <button type="submit">Add Hobby</button>
+        </form>
+        
+        <div class="items-list">
+            <h3>Current Hobbies</h3>
+            <div id="hobbies-list" class="item-grid"></div>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h2>Manage Essentials</h2>
+        <form id="add-essential-form" class="add-item-form">
+            <input type="text" id="new-essential-name" placeholder="Essential name" required>
+            <input type="number" id="new-essential-value" placeholder="Point value" min="1" required>
+            <button type="submit">Add Essential</button>
+        </form>
+        
+        <div class="items-list">
+            <h3>Current Essentials</h3>
+            <div id="essentials-list" class="item-grid"></div>
+        </div>
+    </div>
+
+    <div class="settings-actions">
+        <button id="reset-defaults" class="danger-btn">Reset to Defaults</button>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+</html>
