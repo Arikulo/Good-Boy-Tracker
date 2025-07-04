@@ -27,8 +27,22 @@ if (!completedTable) {
     completedTable = document.getElementById('completed-table-body');
 }
 
+function getTodayString() {
+    const today = new Date();
+    return today.toISOString().split('T')[0]; // e.g., "2025-07-04"
+}
+
+// Always filter completed activities to only today's on load
+function loadCompletedActivitiesForToday() {
+    const allCompleted = JSON.parse(localStorage.getItem('completed-activities') || '[]');
+    const today = getTodayString();
+    const todaysCompleted = allCompleted.filter(act => act.date === today);
+    localStorage.setItem('completed-activities', JSON.stringify(todaysCompleted));
+    return todaysCompleted;
+}
+
+let completedActivities = loadCompletedActivitiesForToday();
 let activities = JSON.parse(localStorage.getItem('today-activities') || '[]');
-let completedActivities = JSON.parse(localStorage.getItem('completed-activities') || '[]');
 let overallPoints = parseInt(localStorage.getItem('overall-points') || '0', 10);
 
 function updateTable() {
@@ -85,11 +99,17 @@ saveDayBtn.addEventListener('click', function() {
     overallPoints += total;
     localStorage.setItem('overall-points', overallPoints);
     updateOverallPoints();
-    // Move activities to completed list
-    completedActivities = completedActivities.concat(activities);
+    // Move activities to completed list with today's date
+    const today = getTodayString();
+    const completedWithDate = activities.map(act => ({
+        ...act,
+        date: today
+    }));
+    completedActivities = completedActivities.concat(completedWithDate);
     activities = [];
+    // After adding, filter and save only today's completed activities
+    completedActivities = completedActivities.filter(act => act.date === today);
     updateTable();
-    // Save completed list
     localStorage.setItem('completed-activities', JSON.stringify(completedActivities));
 });
 
