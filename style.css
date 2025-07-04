@@ -22,6 +22,17 @@
     --font-family: 'Inconsolata', 'Segoe UI', Arial, sans-serif;
     --shadow-sm: 0 2px 6px rgba(37,99,235,0.12);
     --shadow-md: 0 2px 12px rgba(37,99,235,0.10);
+    
+    /* Font size variables */
+    --font-size-base: 1.1em;
+    --font-size-small: 1em;
+    --font-size-large: 1.25em;
+    --font-size-xl: 1.4em;
+    
+    /* Spacing variables */
+    --padding-base: 0.75em;
+    --padding-large: 1em;
+    --margin-base: 1em;
 }
 
 /* Main body styling */
@@ -30,24 +41,41 @@ body {
     margin: 2em;
     background: var(--background-dark);
     color: var(--text-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
 }
 
 /* Headings styling */
 h1, h2, h3 {
     color: var(--primary-blue);
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: var(--font-size-xl);
+}
+
+h2 {
+    font-size: var(--font-size-large);
+}
+
+h3 {
+    font-size: var(--font-size-base);
 }
 
 /* Form elements base styling */
 input, button, select {
     margin: 0.5em 0;
-    padding: 0.5em;
+    padding: var(--padding-base);
     border-radius: 4px;
     border: 1px solid var(--border-color);
-    font-size: 1em;
+    font-size: var(--font-size-base);
     background: var(--surface-dark);
     color: var(--text-primary);
     transition: border 0.2s, box-shadow 0.2s;
     font-family: var(--font-family);
+    min-height: 44px; /* Minimum touch target size */
+    box-sizing: border-box;
 }
 
 /* Focus state for form elements */
@@ -65,10 +93,17 @@ button {
     cursor: pointer;
     font-weight: 700;
     box-shadow: var(--shadow-sm);
+    font-size: var(--font-size-base);
+    padding: var(--padding-large);
+    min-height: 48px; /* Better touch target */
 }
 
 button:hover {
     background: linear-gradient(90deg, var(--primary-blue-darker) 60%, var(--primary-blue-dark) 100%);
+}
+
+button:active {
+    transform: translateY(1px);
 }
 
 /* Table styling */
@@ -85,14 +120,16 @@ table {
 
 th, td {
     border: 1px solid var(--border-color);
-    padding: 0.75em;
+    padding: var(--padding-large);
     text-align: left;
+    font-size: var(--font-size-base);
 }
 
 th {
     background: var(--primary-blue-dark);
     color: #fff;
     letter-spacing: 0.03em;
+    font-size: var(--font-size-base);
 }
 
 tr:nth-child(even) td {
@@ -154,9 +191,9 @@ form {
 
 #current-datetime {
     font-weight: bold;
-    margin-bottom: 1em;
+    margin-bottom: var(--margin-base);
     color: var(--primary-blue);
-    font-size: 1.1em;
+    font-size: var(--font-size-large);
 }
 
 /* Header and navigation */
@@ -189,16 +226,16 @@ form {
 /* Grid layouts */
 .essentials-grid, .item-grid {
     display: grid;
-    gap: 1em;
+    gap: var(--margin-base);
 }
 
 .essentials-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    margin: 1em 0;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    margin: var(--margin-base) 0;
 }
 
 .item-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
 /* Form layouts */
@@ -220,15 +257,16 @@ form {
 
 /* Item cards and components */
 .essential-item, .item-card {
-    padding: 0.75em;
+    padding: var(--padding-large);
     display: flex;
     align-items: center;
     transition: background-color 0.2s;
-    min-height: 3em;
+    min-height: 3.5em;
+    font-size: var(--font-size-base);
 }
 
 .essential-item {
-    gap: 0.5em;
+    gap: 0.75em;
 }
 
 .essential-item:hover {
@@ -238,21 +276,22 @@ form {
 .item-card {
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0.5em;
+    gap: 0.75em;
 }
 
 .essential-item label {
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.75em;
     cursor: pointer;
     flex: 1;
+    font-size: var(--font-size-base);
 }
 
 .essential-item input[type="checkbox"] {
     margin: 0;
-    width: 1.2em;
-    height: 1.2em;
+    width: 1.4em;
+    height: 1.4em;
     accent-color: var(--primary-blue);
 }
 
@@ -260,11 +299,12 @@ form {
 .essential-name, .item-name {
     font-weight: bold;
     color: var(--text-primary);
+    font-size: var(--font-size-base);
 }
 
 .essential-points, .item-points {
     color: var(--text-secondary);
-    font-size: 0.9em;
+    font-size: var(--font-size-small);
 }
 
 .item-info {
@@ -282,21 +322,22 @@ form {
 /* Action buttons */
 .item-actions {
     display: flex;
-    gap: 0.5em;
+    gap: 0.75em;
     flex-shrink: 0;
 }
 
 .edit-btn, .delete-btn {
-    padding: 0.4em 0.8em;
-    font-size: 0.85em;
-    min-width: 60px;
+    padding: 0.6em 1em;
+    font-size: var(--font-size-small);
+    min-width: 70px;
+    min-height: 44px;
     white-space: nowrap;
 }
 
 /* Edit form styling - full width overlay */
 .edit-form {
     display: flex;
-    gap: 0.5em;
+    gap: 0.75em;
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
@@ -304,25 +345,27 @@ form {
 
 .edit-form input {
     margin: 0;
-    padding: 0.4em;
-    font-size: 0.9em;
+    padding: 0.6em;
+    font-size: var(--font-size-base);
     flex: 1;
-    min-width: 100px;
+    min-width: 120px;
+    min-height: 44px;
 }
 
 .edit-form input:first-of-type {
-    min-width: 120px;
+    min-width: 140px;
 }
 
 .edit-form input:last-of-type {
-    min-width: 80px;
-    max-width: 100px;
+    min-width: 90px;
+    max-width: 120px;
 }
 
 .edit-form button {
-    padding: 0.4em 0.8em;
-    font-size: 0.85em;
-    min-width: 60px;
+    padding: 0.6em 1em;
+    font-size: var(--font-size-small);
+    min-width: 70px;
+    min-height: 44px;
     margin: 0.2em 0;
 }
 
@@ -353,13 +396,159 @@ form {
     padding: 2em 0;
 }
 
-/* Responsive adjustments for small screens */
-@media (max-width: 600px) {
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+    :root {
+        --font-size-base: 1.2em;
+        --font-size-small: 1.1em;
+        --font-size-large: 1.35em;
+        --font-size-xl: 1.5em;
+        --padding-base: 1em;
+        --padding-large: 1.2em;
+        --margin-base: 1.2em;
+    }
+    
+    body {
+        margin: 1em;
+        font-size: var(--font-size-base);
+    }
+    
+    /* Better mobile grid layouts */
+    .essentials-grid {
+        grid-template-columns: 1fr;
+        gap: 1em;
+    }
+    
+    .item-grid {
+        grid-template-columns: 1fr;
+        gap: 1em;
+    }
+    
+    /* Mobile-friendly forms */
+    .add-item-form {
+        flex-direction: column;
+        gap: 0.75em;
+    }
+    
+    .add-item-form input,
+    .add-item-form button {
+        width: 100%;
+        min-width: auto;
+        font-size: var(--font-size-base);
+        padding: var(--padding-large);
+        min-height: 50px;
+    }
+    
+    /* Mobile table adjustments */
+    table {
+        font-size: var(--font-size-small);
+        overflow-x: auto;
+        display: block;
+        white-space: nowrap;
+    }
+    
+    th, td {
+        padding: 0.8em 0.6em;
+        font-size: var(--font-size-small);
+    }
+    
+    /* Mobile button sizing */
+    button {
+        min-height: 50px;
+        font-size: var(--font-size-base);
+        padding: var(--padding-large);
+        touch-action: manipulation;
+    }
+    
+    .edit-btn, .delete-btn {
+        min-height: 48px;
+        padding: 0.8em 1.2em;
+        font-size: var(--font-size-small);
+    }
+    
+    /* Mobile item cards */
+    .item-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1em;
+    }
+    
+    .item-actions {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .edit-form {
+        flex-direction: column;
+        gap: 0.75em;
+    }
+    
+    .edit-form input,
+    .edit-form button {
+        width: 100%;
+        min-width: auto;
+        min-height: 48px;
+    }
+    
+    /* Mobile points summary */
+    .points-summary {
+        padding: 1em;
+        margin: 1em 0;
+    }
+    
+    .points-summary-content {
+        flex-direction: column;
+        gap: 0.5em;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    /* Mobile header */
+    .header-controls {
+        flex-direction: column;
+        gap: 0.5em;
+        align-items: center;
+    }
+    
+    #current-datetime {
+        font-size: var(--font-size-large);
+        text-align: center;
+    }
+    
+    /* Essential items mobile optimization */
+    .essential-item {
+        padding: 1.2em;
+        min-height: 4em;
+    }
+    
+    .essential-item input[type="checkbox"] {
+        width: 1.6em;
+        height: 1.6em;
+    }
+    
+    .essential-item label {
+        gap: 1em;
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 480px) {
     body {
         margin: 0.5em;
-        background: #181f2a;
     }
-    table, th, td {
-        font-size: 0.95em;
+    
+    h1 {
+        font-size: 1.4em;
+        text-align: center;
+    }
+    
+    h2 {
+        font-size: 1.25em;
+    }
+    
+    .settings-header {
+        flex-direction: column;
+        gap: 1em;
+        text-align: center;
     }
 }
