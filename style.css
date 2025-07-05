@@ -95,6 +95,50 @@ input:focus, button:focus, select:focus {
     box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.33);
 }
 
+/* Number input spinner controls */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-blue);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: inner-spin-button;
+    background: var(--primary-blue);
+    opacity: 1;
+}
+
+input[type="number"]::-webkit-inner-spin-button:hover {
+    background: var(--primary-blue-light);
+}
+
+/* Firefox number input spinner */
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-moz-number-spin-box {
+    background: var(--primary-blue);
+}
+
+input[type="number"]::-moz-number-spin-up,
+input[type="number"]::-moz-number-spin-down {
+    background: var(--primary-blue);
+    border: none;
+}
+
+input[type="number"]::-moz-number-spin-up:hover,
+input[type="number"]::-moz-number-spin-down:hover {
+    background: var(--primary-blue-light);
+}
+
 /* Button styling */
 button {
     background: linear-gradient(90deg, var(--primary-blue-dark) 60%, var(--primary-blue-darker) 100%);
@@ -157,10 +201,11 @@ th, td {
 }
 
 th {
-    background: var(--primary-blue-dark);
+    background: #374151;
     color: #fff;
     letter-spacing: 0.03em;
     font-size: var(--font-size-base);
+    border-bottom: 2px solid var(--primary-blue);
 }
 
 tr:nth-child(even) td {
@@ -410,7 +455,7 @@ form {
 }
 
 .essential-points, .item-points {
-    color: var(--text-secondary);
+    color: var(--primary-blue);
     font-size: var(--font-size-small);
 }
 
@@ -525,6 +570,7 @@ h2 {
         --padding-base: 1em;
         --padding-large: 1.2em;
         --margin-base: 1.2em;
+        --background-dark: #1f2937; /* Lighter background for mobile */
     }
     
     body {
