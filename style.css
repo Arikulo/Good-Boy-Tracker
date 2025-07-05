@@ -7,9 +7,11 @@
     --primary-blue-light: #93c5fd;
     --primary-blue-dark: #2563eb;
     --primary-blue-darker: #1e40af;
+    --primary-blue-rgb: 96, 165, 250;
     --background-dark: #181f2a;
     --surface-dark: #232c3a;
     --surface-darker: #1e293b;
+    --card-bg: #1e293b;
     --border-color: #334155;
     --text-primary: #e3e8ee;
     --text-secondary: #94a3b8;
@@ -22,17 +24,24 @@
     --font-family: 'Inconsolata', 'Segoe UI', Arial, sans-serif;
     --shadow-sm: 0 2px 6px rgba(37,99,235,0.12);
     --shadow-md: 0 2px 12px rgba(37,99,235,0.10);
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.2);
     
     /* Font size variables */
     --font-size-base: 1.1em;
     --font-size-small: 1em;
     --font-size-large: 1.25em;
     --font-size-xl: 1.4em;
+    --font-size-xlarge: 1.6em;
     
     /* Spacing variables */
     --padding-base: 0.75em;
     --padding-large: 1em;
     --margin-base: 1em;
+    
+    /* Border radius variables */
+    --border-radius: 8px;
+    --border-radius-large: 12px;
 }
 
 /* Main body styling */
@@ -76,6 +85,7 @@ input, button, select {
     font-family: var(--font-family);
     min-height: 44px; /* Minimum touch target size */
     box-sizing: border-box;
+    box-shadow: var(--shadow-sm);
 }
 
 /* Focus state for form elements */
@@ -104,6 +114,27 @@ button:hover {
 
 button:active {
     transform: translateY(1px);
+}
+
+/* Special button styles */
+#save-day {
+    background: linear-gradient(135deg, var(--success-color) 0%, var(--green-color-dark) 100%);
+    font-size: var(--font-size-large);
+    padding: 1em 2em;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+    margin: 2em auto;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#save-day:hover {
+    background: linear-gradient(135deg, var(--green-color-dark) 0%, var(--success-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 /* Table styling */
@@ -141,52 +172,128 @@ tr:nth-child(even) td {
     background: var(--surface-dark);
     border: 1px solid var(--border-color);
     border-radius: 6px;
+    box-shadow: var(--shadow-soft);
 }
 
 .settings-section {
     padding: 1.5em;
     margin-bottom: 1.5em;
     border-radius: 8px;
+    border: 2px solid var(--primary-blue);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(96, 165, 250, 0.15);
 }
 
 /* Points and totals styling */
 .points-summary {
-    background-color: #2a2a2a;
-    padding: 10px;
-    margin: 15px 0;
-    border-radius: 5px;
-    border: 1px solid #555;
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--surface-darker) 100%);
+    padding: 1.5em;
+    margin: 2em 0;
+    border-radius: var(--border-radius-large);
+    border: 2px solid var(--primary-blue);
+    box-shadow: var(--shadow-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.points-summary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue-dark) 0%, var(--primary-blue) 50%, var(--primary-blue-dark) 100%);
 }
 
 .points-summary h3 {
-    margin: 0 0 8px 0;
-    color: #fff;
-    font-size: 1em;
+    margin: 0 0 1em 0;
+    color: var(--primary-blue);
+    font-size: var(--font-size-xl);
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .points-summary-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1em;
+}
+
+.points-summary-content > div {
+    text-align: center;
+    flex: 1;
 }
 
 .points-summary-content span {
-    color: var(--text-muted);
+    color: var(--text-primary);
+    font-size: var(--font-size-large);
+    font-weight: 600;
 }
 
 #today-total {
     color: var(--success-color);
     font-weight: bold;
+    font-size: var(--font-size-large);
 }
 
 #overall-points {
     color: var(--primary-blue);
     font-weight: bold;
+    font-size: var(--font-size-large);
 }
 
 /* Layout and spacing */
 form {
     margin-bottom: 1em;
+}
+
+/* Section separators */
+.section-separator {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--border-color) 20%, var(--primary-blue) 50%, var(--border-color) 80%, transparent 100%);
+    margin: 2.5em 0;
+    border: none;
+    border-radius: 1px;
+    box-shadow: 0 1px 2px rgba(var(--primary-blue-rgb), 0.1);
+}
+
+.section-separator.thick {
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, var(--primary-blue-dark) 10%, var(--primary-blue) 50%, var(--primary-blue-dark) 90%, transparent 100%);
+    margin: 3em 0;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(var(--primary-blue-rgb), 0.15);
+}
+
+/* Section containers with enhanced styling */
+.tracker-section {
+    margin-bottom: 1.5em;
+    padding: 1.5em;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-large);
+    border: 2px solid var(--primary-blue-dark);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 6px 18px rgba(96, 165, 250, 0.2);
+    position: relative;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.tracker-section:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3), 0 8px 22px rgba(96, 165, 250, 0.25);
+}
+
+.tracker-section h1 {
+    margin-top: 0;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--primary-blue);
+    margin-bottom: 1em;
+    font-size: var(--font-size-xlarge);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 }
 
 #current-datetime {
@@ -388,6 +495,18 @@ form {
 
 .danger-btn {
     color: #fff;
+}
+
+/* Enhanced section headers */
+h2 {
+    font-size: var(--font-size-xl);
+    text-align: center;
+    margin: 1.5em 0 1em 0;
+    padding: 0.5em;
+    background: linear-gradient(135deg, var(--surface-darker) 0%, var(--card-bg) 100%);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--primary-blue-dark);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 3px 10px rgba(96, 165, 250, 0.15);
 }
 
 /* Settings page specific styles */

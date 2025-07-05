@@ -14,55 +14,68 @@
         <div id="current-datetime"></div>
         <a href="settings.html" class="settings-link">⚙️ Settings</a>
     </div>
-    <h1>Daily Chore Tracker</h1>
-    <form id="chore-form">
-        <input type="text" id="chore-name" list="chore-options" placeholder="Choose or type a chore" required>
-        <datalist id="chore-options">
-            <!-- Options will be populated dynamically -->
-        </datalist>
-        <input type="number" id="chore-value" placeholder="Value" required>
-        <button type="submit">Add Chore</button>
-    </form>
-    <table id="chore-table">
-        <thead>
-            <tr>
-                <th>Chore</th>
-                <th>Value</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <h2>Total: <span id="total-value">0</span></h2>
 
-    <h1>Daily Hobbies Tracker</h1>
-    <form id="hobby-form">
-        <input type="text" id="hobby-name" list="hobby-options" placeholder="Choose or type a hobby" required>
-        <datalist id="hobby-options">
-            <!-- Options will be populated dynamically -->
-        </datalist>
-        <input type="number" id="hobby-value" placeholder="Value" required>
-        <button type="submit">Add Hobby</button>
-    </form>
-    <table id="hobby-table">
-        <thead>
-            <tr>
-                <th>Hobby</th>
-                <th>Value</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <h2>Total: <span id="hobby-total-value">0</span></h2>
-
-    <h1>Daily Essentials</h1>
-    <div id="essentials-section">
-        <div id="essentials-list" class="essentials-grid">
-            <!-- Checkboxes will be populated dynamically -->
-        </div>
-        <h2>Total: <span id="essentials-total-value">0</span></h2>
+    <div class="tracker-section">
+        <h1>Chores</h1>
+        <form id="chore-form">
+            <input type="text" id="chore-name" list="chore-options" placeholder="Choose or type a chore" required>
+            <datalist id="chore-options">
+                <!-- Options will be populated dynamically -->
+            </datalist>
+            <input type="number" id="chore-value" placeholder="Value" required>
+            <button type="submit">Add Chore</button>
+        </form>
+        <table id="chore-table">
+            <thead>
+                <tr>
+                    <th>Chore</th>
+                    <th>Value</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <h2>Total: <span id="total-value">0</span></h2>
     </div>
+
+    <div class="section-separator"></div>
+
+    <div class="tracker-section">
+        <h1>Hobbies</h1>
+        <form id="hobby-form">
+            <input type="text" id="hobby-name" list="hobby-options" placeholder="Choose or type a hobby" required>
+            <datalist id="hobby-options">
+                <!-- Options will be populated dynamically -->
+            </datalist>
+            <input type="number" id="hobby-value" placeholder="Value" required>
+            <button type="submit">Add Hobby</button>
+        </form>
+        <table id="hobby-table">
+            <thead>
+                <tr>
+                    <th>Hobby</th>
+                    <th>Value</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <h2>Total: <span id="hobby-total-value">0</span></h2>
+    </div>
+
+    <div class="section-separator"></div>
+
+    <div class="tracker-section">
+        <h1>Essentials</h1>
+        <div id="essentials-section">
+            <div id="essentials-list" class="essentials-grid">
+                <!-- Checkboxes will be populated dynamically -->
+            </div>
+            <h2>Total: <span id="essentials-total-value">0</span></h2>
+        </div>
+    </div>
+    
+    <div class="section-separator thick"></div>
     
     <button id="save-day">Save Today's Totals</button>
 
@@ -81,6 +94,8 @@
         <input type="number" id="spend-amount" placeholder="Points to spend" min="1" required>
         <button type="submit">Spend Points</button>
     </form>
+
+    <div class="section-separator"></div>
 
     <h2>Completed</h2>
     <table>
