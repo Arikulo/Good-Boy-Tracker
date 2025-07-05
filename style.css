@@ -181,6 +181,27 @@ button:active {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
+#reset-day {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    font-size: var(--font-size-large);
+    padding: 1em 2em;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+    margin: 1em auto;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+#reset-day:hover {
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
 /* Table styling */
 table {
     border-collapse: collapse;
@@ -457,6 +478,43 @@ form {
 .essential-points, .item-points {
     color: var(--primary-blue);
     font-size: var(--font-size-small);
+}
+
+/* Completed essentials styling */
+.essential-item input[type="checkbox"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.essential-name.completed-today {
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.completed-indicator {
+    color: var(--success-color);
+    font-size: var(--font-size-small);
+    font-weight: bold;
+    margin-left: 0.5em;
+}
+
+.essential-item:has(input:disabled) {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left: 3px solid var(--success-color);
+}
+
+.essential-item:has(input:disabled):hover {
+    background-color: rgba(76, 175, 80, 0.15);
+}
+
+/* Fallback for browsers that don't support :has() */
+.essential-item.disabled-item {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left: 3px solid var(--success-color);
+}
+
+.essential-item.disabled-item:hover {
+    background-color: rgba(76, 175, 80, 0.15);
 }
 
 .item-info {

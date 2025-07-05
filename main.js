@@ -4,6 +4,7 @@ const valueInput = document.getElementById('chore-value');
 const tableBody = document.querySelector('#chore-table tbody');
 const totalValue = document.getElementById('total-value');
 const saveDayBtn = document.getElementById('save-day');
+const resetDayBtn = document.getElementById('reset-day');
 
 // Hobby form elements
 const hobbyForm = document.getElementById('hobby-form');
@@ -51,6 +52,14 @@ function loadCompletedActivitiesForToday() {
     const today = getTodayString();
     const todaysCompleted = allCompleted.filter(act => act.date === today);
     localStorage.setItem('completed-activities', JSON.stringify(todaysCompleted));
+    
+    // Clear completed essentials if it's a new day
+    const lastCompletedDate = localStorage.getItem('last-essentials-date');
+    if (lastCompletedDate !== today) {
+        localStorage.setItem('completed-essentials-today', JSON.stringify([]));
+        localStorage.setItem('last-essentials-date', today);
+    }
+    
     return todaysCompleted;
 }
 
@@ -58,6 +67,9 @@ let completedActivities = loadCompletedActivitiesForToday();
 let chores = JSON.parse(localStorage.getItem('today-chores') || '[]');
 let hobbies = JSON.parse(localStorage.getItem('today-hobbies') || '[]');
 let essentials = JSON.parse(localStorage.getItem('today-essentials') || '[]');
+// Load completed essentials after checking for new day
+completedActivities; // This triggers the new day check
+let completedEssentialsToday = JSON.parse(localStorage.getItem('completed-essentials-today') || '[]');
 let overallPoints = parseInt(localStorage.getItem('overall-points') || '0', 10);
 
 function updateTable() {
@@ -102,15 +114,19 @@ function updateEssentialsSection() {
     
     Object.entries(essentialData).forEach(([name, points]) => {
         const isChecked = essentials.some(essential => essential.name === name);
-        if (isChecked) total += points;
+        const isCompletedToday = completedEssentialsToday.includes(name);
+        const isDisabled = isCompletedToday;
+        
+        if (isChecked && !isCompletedToday) total += points;
         
         const item = document.createElement('div');
-        item.className = 'essential-item';
+        item.className = `essential-item ${isDisabled ? 'disabled-item' : ''}`;
         item.innerHTML = `
             <label>
                 <input type="checkbox" ${isChecked ? 'checked' : ''} 
+                       ${isDisabled ? 'disabled' : ''}
                        onchange="toggleEssential('${name}', ${points}, this.checked)">
-                <span class="essential-name">${name}</span>
+                <span class="essential-name ${isDisabled ? 'completed-today' : ''}">${name}</span>
                 <span class="essential-points">(${points} pts)</span>
             </label>
         `;
@@ -146,6 +162,11 @@ window.removeHobby = function(idx) {
 };
 
 window.toggleEssential = function(name, points, isChecked) {
+    // Don't allow toggling if already completed today
+    if (completedEssentialsToday.includes(name)) {
+        return;
+    }
+    
     if (isChecked) {
         // Add to essentials if not already there
         if (!essentials.some(essential => essential.name === name)) {
@@ -185,7 +206,10 @@ hobbyForm.addEventListener('submit', function(e) {
 saveDayBtn.addEventListener('click', function() {
     const choreTotal = chores.reduce((sum, chore) => sum + chore.value, 0);
     const hobbyTotal = hobbies.reduce((sum, hobby) => sum + hobby.value, 0);
-    const essentialTotal = essentials.reduce((sum, essential) => sum + essential.value, 0);
+    // Only count essentials that haven't been completed today
+    const essentialTotal = essentials
+        .filter(essential => !completedEssentialsToday.includes(essential.name))
+        .reduce((sum, essential) => sum + essential.value, 0);
     const combinedTotal = choreTotal + hobbyTotal + essentialTotal;
     
     if (combinedTotal === 0) return;
@@ -204,15 +228,26 @@ saveDayBtn.addEventListener('click', function() {
         ...hobby,
         date: today
     }));
-    const completedEssentialsWithDate = essentials.map(essential => ({
-        ...essential,
-        date: today
-    }));
+    const completedEssentialsWithDate = essentials
+        .filter(essential => !completedEssentialsToday.includes(essential.name))
+        .map(essential => ({
+            ...essential,
+            date: today
+        }));
     
     completedActivities = completedActivities.concat(completedChoresWithDate).concat(completedHobbiesWithDate).concat(completedEssentialsWithDate);
+    
+    // Mark essentials as completed today (but don't clear them) - only the ones that weren't already completed
+    essentials.forEach(essential => {
+        if (!completedEssentialsToday.includes(essential.name)) {
+            completedEssentialsToday.push(essential.name);
+        }
+    });
+    localStorage.setItem('completed-essentials-today', JSON.stringify(completedEssentialsToday));
+    
     chores = [];
     hobbies = [];
-    essentials = [];
+    // Don't clear essentials - keep them checked but disabled
     
     // After adding, filter and save only today's completed activities
     completedActivities = completedActivities.filter(act => act.date === today);
@@ -220,6 +255,39 @@ saveDayBtn.addEventListener('click', function() {
     updateHobbyTable();
     updateEssentialsSection();
     localStorage.setItem('completed-activities', JSON.stringify(completedActivities));
+});
+
+resetDayBtn.addEventListener('click', function() {
+    if (confirm('Are you sure you want to reset today? This will clear all progress and subtract today\'s points from your overall total.')) {
+        // Calculate today's total before clearing
+        const todayTotal = completedActivities.reduce((sum, activity) => sum + activity.value, 0);
+        
+        // Subtract today's total from overall points (can go negative)
+        overallPoints -= todayTotal;
+        localStorage.setItem('overall-points', overallPoints);
+        updateOverallPoints();
+        
+        // Clear today's activities
+        chores = [];
+        hobbies = [];
+        essentials = [];
+        completedActivities = [];
+        completedEssentialsToday = [];
+        
+        // Clear localStorage for today's data
+        localStorage.setItem('today-chores', JSON.stringify([]));
+        localStorage.setItem('today-hobbies', JSON.stringify([]));
+        localStorage.setItem('today-essentials', JSON.stringify([]));
+        localStorage.setItem('completed-activities', JSON.stringify([]));
+        localStorage.setItem('completed-essentials-today', JSON.stringify([]));
+        
+        // Update all displays
+        updateTable();
+        updateHobbyTable();
+        updateEssentialsSection();
+        updateCompletedTable();
+        updateTodayTotal();
+    }
 });
 
 function updateOverallPoints() {
