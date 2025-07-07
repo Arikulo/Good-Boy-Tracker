@@ -87,13 +87,16 @@
                 <span>Today's Total: <span id="today-total">0</span></span>
             </div>
             <div>
-                <span>Overall Points: <span id="overall-points">0</span></span>
+                <span>Overall Points: <span id="overall-points">0</span> <span id="overall-points-money" class="money-value">(£0.00)</span></span>
             </div>
         </div>
     </div>
     <form id="spend-form">
-        <input type="number" id="spend-amount" placeholder="Points to spend" min="1" required>
-        <button type="submit">Spend Points</button>
+        <div class="spend-form-container">
+            <input type="number" id="spend-amount" placeholder="Points to spend" min="1" required>
+            <button type="submit">Spend Points</button>
+        </div>
+        <div id="spend-amount-money" class="money-value spend-money-below"></div>
     </form>
 
     <div class="section-separator"></div>

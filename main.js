@@ -18,9 +18,11 @@ const essentialsList = document.getElementById('essentials-list');
 const essentialsTotalValue = document.getElementById('essentials-total-value');
 
 const overallPointsSpan = document.getElementById('overall-points');
+const overallPointsMoneySpan = document.getElementById('overall-points-money');
 const todayTotalSpan = document.getElementById('today-total');
 const spendForm = document.getElementById('spend-form');
 const spendAmountInput = document.getElementById('spend-amount');
+const spendAmountMoneySpan = document.getElementById('spend-amount-money');
 
 // New: completed activities table
 let completedTable = document.getElementById('completed-table-body');
@@ -292,6 +294,7 @@ resetDayBtn.addEventListener('click', function() {
 
 function updateOverallPoints() {
     overallPointsSpan.textContent = overallPoints;
+    overallPointsMoneySpan.textContent = `(${pointsToMoney(overallPoints)})`;
 }
 
 function updateTodayTotal() {
@@ -309,6 +312,16 @@ spendForm.addEventListener('submit', function(e) {
         spendAmountInput.value = '';
     } else {
         alert('Not enough points to spend!');
+    }
+});
+
+// Add event listener to update spend amount money display
+spendAmountInput.addEventListener('input', function() {
+    const spendAmount = parseInt(this.value, 10);
+    if (!isNaN(spendAmount) && spendAmount > 0) {
+        spendAmountMoneySpan.textContent = `(${pointsToMoney(spendAmount)})`;
+    } else {
+        spendAmountMoneySpan.textContent = '';
     }
 });
 
@@ -453,3 +466,9 @@ window.addEventListener('focus', function() {
         updateEssentialsSection();
     }
 });
+
+// Convert points to money (6 pence per point)
+function pointsToMoney(points) {
+    const pounds = (points * 0.06).toFixed(2);
+    return `£${pounds}`;
+}

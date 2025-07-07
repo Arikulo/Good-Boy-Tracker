@@ -618,6 +618,34 @@ h2 {
     padding: 2em 0;
 }
 
+/* Money value styling */
+.money-value {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    font-weight: normal;
+    margin-left: 0.5em;
+}
+
+#spend-amount-money {
+    margin-left: 0;
+    color: var(--primary-blue);
+    font-weight: bold;
+}
+
+.spend-money-below {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.spend-form-container {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+}
+
 /* Responsive adjustments for mobile devices */
 @media (max-width: 768px) {
     :root {
